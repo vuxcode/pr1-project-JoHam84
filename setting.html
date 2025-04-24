@@ -1,0 +1,45 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings Page</title>
+  <style>
+    /* Basic styling for the body */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Styling for the container holding buttons */
+    .button-container {
+      margin: 20px;
+    }
+
+    /* Styling for the buttons */
+    button {
+      display: block;
+      margin-bottom: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <!-- Button container for navigation -->
+  <div class="button-container">
+    <button onclick="goToPage('index.html')">Back to Menu</button> <!-- Redirects to index.html -->
+  </div>
+
+  <script>
+    /**
+     * Redirect user to a specified page
+     * @param {string} page - The HTML file name to navigate to
+     */
+    function goToPage(page) {
+      window.location.href = page; // Sets the browser's location to the specified page
+    }
+  </script>
+</body>
+</html>

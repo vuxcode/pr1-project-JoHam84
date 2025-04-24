@@ -9,7 +9,13 @@ The final program is not the goal! The aim of the project is to show how you hav
 
 # Project Notes
 
-> You can use this section of the file to keep notes about your project as you work on it.
+> 2025-04-24 
+- The plan for this work time is to have a manin page (index.html) and connect the other pages (setting.html & game.html) via buttons from the index.html.
+- From the game and settings page there is a button (Back to menue) that the user can click its way back to the main page. The problem here was to find out how to connect to another page, but luckily I made it. I also adde a about page. 
+- old note and with some help of Google I manage to figure this out.
+
+> 2025-04-23
+The 
 
 # Project Summary
 
