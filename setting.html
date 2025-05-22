@@ -1,43 +1,187 @@
-<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Settings Page</title>
+  <meta charset="UTF-8"> <!-- Ställer in teckenkodning för dokumentet till UTF-8 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Gör layouten responsiv -->
+  <title>Inställningssida</title> <!-- Titel för sidan -->
   <style>
-    /* Basic styling for the body */
+    /* Grundläggande styling för body */
     body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
+      font-family: Arial, sans-serif; /* Standard font */
+      display: flex; /* Gör layouten flexibel */
+      justify-content: center; /* Centrera innehåll horisontellt */
+      align-items: center; /* Centrera innehåll vertikalt */
+      height: 100vh; /* Full höjd */
+      background-color: #f0f0f0; /* Ljus grå bakgrundsfärg */
+      margin: 0; /* Tar bort standardmarginal */
     }
-
-    /* Styling for the container holding buttons */
-    .button-container {
-      margin: 20px;
+    /* Behållare för inställningar */
+    .settings-container {
+      width: 500px; /* Bredd på innehållet */
+      background-color: white; /* Vit bakgrund */
+      border: 2px solid #ddd; /* Ljusgrå ram */
+      padding: 20px; /* Inre marginal */
+      border-radius: 10px; /* Rundade hörn */
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtil skugga */
     }
-
-    /* Styling for the buttons */
-    button {
-      display: block;
-      margin-bottom: 10px;
-      padding: 10px 20px;
-      font-size: 16px;
-      cursor: pointer;
+    /* Knapp för att gå tillbaka till menyn */
+    .back-button {
+      position: absolute; /* Placera knappen absolut */
+      top: 10px; /* 10px från toppen */
+      left: 10px; /* 10px från vänster */
+      background-color: #007BFF; /* Blå bakgrund */
+      color: white; /* Vit text */
+      border: none; /* Ingen kantlinje */
+      border-radius: 5px; /* Rundade hörn */
+      padding: 10px 15px; /* Inre marginaler */
+      cursor: pointer; /* Byt muspekare till pekare vid hover */
+      font-size: 14px; /* Fontstorlek på knappen */
+    }
+    /* Inställningar: behållaren för etikett, slider och värde */
+    .setting-item {
+      margin-bottom: 20px; /* Marginal mellan inställningar */
+      display: flex; /* Flex layout för att ordna etikett och värde */
+      align-items: center; /* Centrera etikett, slider och värde vertikalt */
+    }
+    /* Styling för etiketter */
+    .slider-label {
+      flex: 1; /* Ta upp tillgängligt utrymme bredvid värdet */
+      font-size: 16px; /* Fontstorlek för etiketter */
+    }
+    /* Styling för sliders */
+    input[type="range"] {
+      flex: 2; /* Slider får extra bredd */
+      margin-right: 10px; /* Utrymme mellan slider och värde */
+    }
+    /* Styling för värdet bredvid slider */
+    .slider-value {
+      font-weight: bold; /* Gör texten fet */
+      text-align: center; /* Centrera värdet vertikalt */
+      width: 50px; /* Fast bredd för bättre justering */
+    }
+    /* Generell styling för knappar */
+    .button {
+      width: 100%; /* Gör knappen bredare */
+      padding: 10px; /* Inre marginaler */
+      margin-bottom: 10px; /* Marginal mellan knappar */
+      font-size: 16px; /* Fontstorlek för knappen */
+      font-weight: bold; /* Fetstil för texten */
+      color: white; /* Vit text */
+      border: none; /* Ingen ram */
+      border-radius: 5px; /* Rundade hörn */
+      cursor: pointer; /* Byt muspekare till pekare vid hover */
+    }
+    /* Styling för Dark Theme-knappen */
+    .dark-theme-button {
+      background-color: #333; /* Mörk bakgrund */
+    }
+    /* Styling för Save-knappen */
+    .save-button {
+      background-color: #28a745; /* Grön bakgrund */
+    }
+    /* Styling för Clicktest-knappen */
+    .clicktest-button {
+      background-color: #007BFF; /* Blå bakgrund */
     }
   </style>
 </head>
+
 <body>
-  <!-- Button container for navigation -->
-  <div class="button-container">
-    <button onclick="goToPage('index.html')">Back to Menu</button> <!-- Redirects to index.html -->
+  <!-- Knapp för att gå tillbaka till menyn -->
+  <button class="back-button" onclick="goToPage('index.html')">Tillbaka till Menyn</button>
+
+  <!-- Behållare för alla inställningar -->
+  <div class="settings-container">
+    <!-- Slider för antal boxar -->
+    <div class="setting-item">
+      <label class="slider-label">Number of Boxes</label> <!-- Etikett för slider -->
+      <input type="range" id="boxSlider" min="3" max="10"> <!-- Slider -->
+      <div class="slider-value" id="boxValue"></div> <!-- Värdevisning -->
+    </div>
+
+    <!-- Slider för antal färger -->
+    <div class="setting-item">
+      <label class="slider-label">Number of Colors</label> <!-- Etikett för slider -->
+      <input type="range" id="colorSlider" min="2" max="6"> <!-- Slider -->
+      <div class="slider-value" id="colorValue"></div> <!-- Värdevisning -->
+    </div>
+
+    <!-- Slider för antal serier -->
+    <div class="setting-item">
+      <label class="slider-label">Number of Series</label> <!-- Etikett för slider -->
+      <input type="range" id="seriesSlider" min="0" max="10"> <!-- Slider -->
+      <div class="slider-value" id="seriesValue"></div> <!-- Värdevisning -->
+    </div>
+
+    <!-- Dark Theme-knapp -->
+    <button class="button dark-theme-button" onclick="toggleDarkTheme()">Dark Theme</button>
+
+    <!-- Save-knapp -->
+    <button class="button save-button" onclick="saveSettings()">Save Settings</button>
+
+    <!-- Click Test-knapp -->
+      <button class="button clicktest-button" onclick="clickTest()">Click Test</button>
   </div>
 
   <script>
-     // Redirect user to a specified page
-    
+    // Funktionen för att navigera till en annan sida
+    // page = en sträng
     function goToPage(page) {
-      window.location.href = page; // Sets the browser's location to the specified page
+           // Skickar användaren till angiven sida
+      window.location.href = page;
     }
+
+    // Funktion för att spara inställningar i localStorage manuellt
+    function saveSettings() {
+      // Hämta värden från sliders
+         var boxValue = document.getElementById('boxSlider').value;
+      var colorValue = document.getElementById('colorSlider').value;
+      var seriesValue = document.getElementById('seriesSlider').value;
+
+      // Spara värden i localStorage
+      localStorage.setItem('boxes', boxValue);
+      localStorage.setItem('colors', colorValue);
+      localStorage.setItem('series', seriesValue);
+
+  // Bekräftelsemeddelande vid save.
+      alert('Your new setting is now saved!');
+    }
+
+    // Funktion för att testa musen
+    function clickTest() {
+      // Visar ett popup-meddelande
+      alert("Your mouse works fine!!");
+    }
+
+    // Funktion för att uppdatera slidervärden automatiskt vid förändringar
+  // KeyName är namnet på nyckeln
+    function updateSliderValue(sliderId, valueId, keyName) {
+      // Hämta slider-elementet (html-elementet)
+      var slider = document.getElementById(sliderId);
+  // Hämta värde-elementet som visas i slidern.
+      var valueDisplay = document.getElementById(valueId);
+
+      // Lyssna på varje förändring av slidern 
+      slider.addEventListener('input', function () {
+          // Uppdatera värdet i boxen bredvid slidern med aktuellt värde.
+    
+          valueDisplay.textContent = slider.value;
+
+        // Spara ändrat värde direkt i localStorage under keyName
+        // Tex localStorages["Boxes"] = "5";
+        localStorage.setItem(keyName, slider.value);
+      });
+
+      // Hämtar värdet från localStorage med nyckel keyName. Om inget är sparat använd lägsta värde för slidern.
+      slider.value = localStorage.getItem(keyName) || slider.min;
+      
+    
+      valueDisplay.textContent = slider.value;
+    }
+
+    // Uppdatera varje slider med ID, värde-ID och nyckel i localStorage
+
+
+    updateSliderValue('boxSlider', 'boxValue', 'boxes');
+    updateSliderValue('colorSlider', 'colorValue', 'colors');
+    updateSliderValue('seriesSlider', 'seriesValue', 'series');
   </script>
 </body>
-</html>

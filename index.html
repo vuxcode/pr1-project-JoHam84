@@ -1,43 +1,115 @@
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Main Page</title>
+  <meta charset="UTF-8"> <!-- Ställer in dokumentets teckenkodning till UTF-8 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Gör layout responsiv -->
+  <title>Index - Scoreboard</title> <!-- Titel för sidan -->
   <style>
-    /* Basic styling for the body */
+    /* Grundläggande styling för sidan */
     body {
-      font-family: Arial, sans-serif; /* Sets font for the entire page */
-      margin: 0;                       /* Removes default margin */
-      padding: 0;                          /* Removes default padding */
+      font-family: Arial, sans-serif; /* Standard font */
+      background-color: #f0f0f0; /* Ljus bakgrundsfärg */
+      margin: 0; /* Ingen yttre marginal */
+      padding: 0; /* Ingen inre padding */
+      display: flex; /* Flexbox-layout */
+      flex-direction: column; /* Placera element vertikalt */
     }
 
-    /* Styling for the container holding buttons */
-    .button-container {
-      margin: 20px;            /* Adds space from the edges */
+    /* Styling för knapplistan */
+    .button-list {
+      position: absolute; /* Positioneras i hörnet */
+      top: 10px; /* Placeras längst upp */
+      left: 10px; /* Placeras längst till vänster */
+      display: flex; /* Flexbox-layout */
+      flex-direction: column; /* Vertikal layout (under varandra) */
+      gap: 10px; /* Avstånd mellan knappar */
     }
 
-    /* Styling for the buttons */
-    button {
-      display: block;          /* Ensures buttons are stacked vertically */
-      margin-bottom: 10px;      /* Adds space between buttons */
-      padding: 10px 20px;        /* Adds padding inside buttons */
-      font-size: 16px;         /* Sets font size */
-      cursor: pointer;         /* Shows a pointer when hovering over the button */
+    /* Styling för knapparna */
+    .menu-button {
+      background-color: #007BFF; /* Blå knappfärg */
+      color: white; /* Vit text */
+      border: none; /* Ingen kantlinje */
+      border-radius: 5px; /* Rundade hörn */
+      padding: 10px 20px; /* Inre avstånd */
+      cursor: pointer; /* Pekande muspekare vid hover */
+      font-size: 1rem; /* Textstorlek */
+    }
+
+    /* Styling för huvudsektionen (centrera scoreboarden) */
+    .main-container {
+      flex: 1; /* Gör så att huvudsektionen fyller resterande utrymme */
+      display: flex; /* Flexbox-layout */
+      align-items: center; /* Centrera vertikalt */
+      justify-content: center; /* Centrera horisontellt */
+    }
+
+    /* Styling för scoreboard */
+    .scoreboard-container {
+      border: 2px solid #333; /* Svart kantlinje */
+      padding: 20px; /* Inre marginal */
+      background-color: white; /* Vit bakgrundsfärg */
+      border-radius: 10px; /* Rundade hörn */
+      width: 50%; /* Bredd på scoreboarden */
+      text-align: center; /* Centrera texten */
+    }
+
+    /* Styling för rubriken i scoreboard */
+    .scoreboard-title {
+      font-size: 1.5rem; /* Storlek för rubriken */
+      margin-bottom: 20px; /* Avstånd under rubriken */
+    }
+
+    /* Styling för varje poäng */
+    .score-entry {
+      font-size: 1rem; /* Textstorlek för resultaten */
+      margin: 5px 0; /* Avstånd mellan poängraderna */
     }
   </style>
 </head>
 <body>
-  <!-- Button container for navigation links -->
-  <div class="button-container">
-    <button onclick="goToPage('game.html')">Game</button>      <!-- Redirects user to game.html -->
-    <button onclick="goToPage('setting.html')">Settings</button> <!-- Redirects user to setting.html -->
-    <button onclick="goToPage('about.html')">About</button>     <!-- Redirects user to about.html -->
+  <!-- Behållare för knapplistan -->
+  <div class="button-list">
+    <!-- Knapp för att starta spelet -->
+    <button class="menu-button" onclick="window.location.href='game.html'">Play Color Sprint - Matching Mania</button>
+    
+    <!-- Knapp för inställningar -->
+    <button class="menu-button" onclick="window.location.href='setting.html'">Settings</button>
+    
+    <!-- Knapp för information om sidan -->
+    <button class="menu-button" onclick="window.location.href='about.html'">About</button>
+  </div>
+
+  <!-- Huvudcontainer för scoreboarden -->
+  <div class="main-container">
+    <div class="scoreboard-container">
+      <h1 class="scoreboard-title">Scoreboard</h1> <!-- Rubrik för scoreboard -->
+      <div id="scoreboard"></div> <!-- Resultatfältet -->
+    </div>
   </div>
 
   <script>
-    // Redirect user to a specified page
-    function goToPage(page) {
-      window.location.href = page; // Sets the browser's location to the specified page
+    // Hämta sparad scoreboard från localStorage
+    var scoreboard = localStorage.getItem("scoreboard");
+
+    // Referens till avsnittet där resultaten visas
+    var scoreboardContainer = document.getElementById("scoreboard");
+
+    if (scoreboard) {
+      // Omvandla sparad data från JSON till en JavaScript-array
+      scoreboard = JSON.parse(scoreboard);
+
+      // Loopa igenom varje resultat sparat i scoreboard
+      scoreboard.forEach(function(entry) {
+        var scoreItem = document.createElement("p"); // Skapar ett nytt stycke för resultatet
+        scoreItem.className = "score-entry"; // Styling för resultaten
+        scoreItem.textContent = entry.initials + ": " + entry.time + " seconds"; // Format för poängtext
+        scoreboardContainer.appendChild(scoreItem); // Lägg till resultatet i HTML
+      });
+    } else {
+      // Om ingen data finns, visa ett meddelande
+      scoreboardContainer.innerHTML = "<p>No scores yet!</p>"; // Ett standardmeddelande
     }
   </script>
 </body>

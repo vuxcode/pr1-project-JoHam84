@@ -1,45 +1,288 @@
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Game Page</title>
+  <meta charset="UTF-8"> <!-- Ställer in teckenkodning för dokumentet till UTF-8 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Gör sidan responsiv på små skärmar -->
+  <title>Color Sprint - Matching Mania</title> <!-- Sätter sidans titel -->
   <style>
-    /* Basic styling for the body */
+    /* Grundläggande styling för hela sidan */
     body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
+      font-family: Arial, sans-serif; /* Standard font */
+      background-color: #f0f0f0; /* Ljus bakgrundsfärg */
+      color: #333; /* Mörk textfärg */
+      margin: 0; /* Ingen yttre marginal */
+      padding: 0; /* Ingen inre padding */
+      display: flex; /* Gör layouten flexibel */
+      align-items: center; /* Centrera innehåll vertikalt */
+      justify-content: center; /* Centrera innehåll horisontellt */
+      height: 100vh; /* Gör höjden till hela viewport-höjden */
+      text-align: center; /* Centrerar text */
     }
 
-    /* Styling for the container holding buttons */
+    /* Styling för "Back to Menu"-knappen */
+    .back-button {
+      position: absolute; /* Knappen placeras relativt till fönstret */
+      top: 10px; /* Placeras 10px från toppen */
+      left: 10px; /* Placeras 10px från vänster */
+      background-color: #007BFF; /* Blå bakgrundsfärg */
+      color: white; /* Vit textfärg */
+      padding: 10px 20px; /* Inre avstånd för knappens höjd och bredd */
+      border: none; /* Ingen synlig kant */
+      border-radius: 5px; /* Rundade hörn */
+      cursor: pointer; /* Visar en pekare när användaren hovrar över */
+    }
+
+    /* Styling för behållaren som håller knapparna */
     .button-container {
-      margin: 20px;
+      display: flex; /* Gör behållaren flexibel */
+      gap: 20px; /* Avstånd mellan knapparna */
     }
 
-    /* Styling for the buttons */
+    /* Styling för själva knapparna */
     button {
-      display: block;
-      margin-bottom: 10px;
-      padding: 10px 20px;
-      font-size: 16px;
-      cursor: pointer;
+      padding: 20px 40px; /* Inre avstånd för knapparnas höjd och bredd */
+      font-size: 1rem; /* Textstorlek för knapptext */
+      border: none; /* Ingen synlig kant */
+      border-radius: 8px; /* Rundade hörn */
+      cursor: pointer; /* Visar pekare vid hover */
+      color: white; /* Vit textfärg */
     }
   </style>
 </head>
 <body>
-  <!-- Button container for navigation -->
-  <div class="button-container">
-    <button onclick="goToPage('index.html')">Back to Menu</button> <!-- Redirects to index.html -->
+  <!-- En knapp som navigerar tillbaka till index-sidan -->
+  <button class="back-button" onclick="window.location.href='index.html'">Back to Menu</button>
+
+  <!-- Huvudrubriker och instruktioner för spelet -->
+  <div>
+    <h1>Color Sprint - Matching Mania</h1> <!-- Huvudrubrik -->
+    <p>The timer starts when you click the correct button.</p> <!-- Instruktion om hur timern startar -->
+    <p>Complete 10 correct clicks to submit your initials!</p> <!-- Instruktion om spelets mål -->
+
+    <!-- Behållare för färgknapparna -->
+    <div class="button-container">
+      <button id="button1"></button> <!-- Skapar den första knappen -->
+      <button id="button2"></button> <!-- Skapar den andra knappen -->
+      <button id="button3"></button> <!-- Skapar den tredje knappen -->
+    </div>
   </div>
 
+  
   <script>
-    /**
-     * Redirect user to a specified page
-     * @param {string} page - The HTML file name to navigate to
-     */
-    function goToPage(page) {
-      window.location.href = page; // Sets the browser's location to the specified page
+
+    // ------------------------------------Globala variabler för spelet---------------------------------------------
+    // En array med de olika färgerna som används i spelet.
+     var colorKeys = ['red', 'green', 'blue']; 
+   
+    // En array med de olika etiketterna till färgerna ovan. Indexen matchar om colorKeys[0] är red och colorLabels [0] är red button
+   var colorLabels = ['Red Button', 'Green Button', 'Blue Button'];
+    
+   // Räknare för antal korrekta klick
+   var correctClicks = 0; 
+   
+   // Starttid för spelet
+   var startTime = null; 
+   
+   // Status för om timern är aktiv
+    var timerRunning = false; 
+
+// Hämtar "Number of series" från localStorage.
+// Finns inget färde i series blir värdet default 10.
+// parseInt omvandlar värdet från en sträng till heltal. localstorage lagrar värdet som en stäng.
+var numberOfSeries = parseInt(localStorage.getItem("series")) || 10;
+
+
+
+
+    // Funktion för att tilldela korrekt färg och text till en unik knapp
+    // och tilldela felaktiga kombinationer till övriga knappar.
+    function changeButtonColorsAndNames() {
+      // Skapar en array som inehåller de tre knapparna.
+      var buttons = [button1, button2, button3]; 
+
+      // Välj slumpmässig korrekt färg och text
+      // Math.floor() = Rundar nedåt till närmaste heltal
+      // Math.random() = slumpar mellan 0 & 1.
+      // EX.
+      // 0.72 * 3 = 2.16 (innan avrundning i math.random() * colorKey.length )
+      // Efter avrundning (math.floor) = blir correctIndex = 2 = blue
+      // correctColor = blue och correctLabel = blue
+      // colorKeys.Length = 3 
+
+      var correctIndex = Math.floor(Math.random() * colorKeys.length);
+
+      // Sparar korrekt färg från slumpande indexet (colorKeys)
+      var correctColor = colorKeys[correctIndex]; 
+
+      // Sparar korrekt etikett från slumpande indexet.
+      var correctLabel = colorLabels[correctIndex];
+
+
+      // En slumpmässig knapp får den rätta färgen. 
+      // 0 för första knappen (button 1)
+      // 1 för andra knappen  (button 2)
+      // 2 för tredje knappen ( button 3)
+      var correctButtonIndex = Math.floor(Math.random() * buttons.length);
+
+      // Loopa igenom vaje knapp för att tilldela rätt färg och text
+     // i = 0 -> button = button 1
+     // i = 1 -> button = button 1
+     // i = 2 -> button = button 2
+      for (var i = 0; i < buttons.length; i++) {
+
+          // knappen som ska ha rätt färg och text
+        var button = buttons[i]; 
+
+          // Logga buttons arrayen 
+          console.log(buttons);
+
+        if (i === correctButtonIndex) {
+          // Tilldela korrekt färg (correctColor) och text (correctLabel) till den korrekt valda knappen
+          // Om corrctButtonIndex=0 så får button1 rätt färg (grön) och text (green button)
+          button.style.backgroundColor = correctColor;
+          button.innerText = correctLabel;
+        } else {
+
+// Kontroll av uträkningen. Det verkar dock som att jag ser steget före efter att jag har klickat. Kolla upp detta!
+/*console.log("Runda: " + (i + 1) + ":" );
+      console.log(" Slumpat index: " + correctIndex);
+      console.log(" Vald färg: " + correctColor);
+      console.log(" vald etikett " + correctLabel);
+*/
+          // Tilldela slumpmässiga felkombinationer till övriga knappar
+          // Slumpindex för färg från colorIndex
+          var randomColorIndex = Math.floor(Math.random() * colorKeys.length); 
+
+          // Slumpindex för text från colorLabels
+          var randomLabelIndex = Math.floor(Math.random() * colorLabels.length); 
+
+          // Felaktiga knappar får slumade färger och etiketter. While-loopen säkerställer att de
+          //inte matchar den korrekta kombinationen.
+
+          // Fungerar ej. Ny lösning: Kontrollera både färd och text samtidigt?
+
+          while (randomColorIndex === correctIndex && randomLabelIndex === correctIndex) {
+            // Ny slumpmässig färg-index
+            randomColorIndex = Math.floor(Math.random() * colorKeys.length); 
+            // Ny slumpmässig etikett-index
+            randomLabelIndex = Math.floor(Math.random() * colorLabels.length); 
+          }
+
+          // Tilldela felaktig färg
+          button.style.backgroundColor = colorKeys[randomColorIndex]; 
+
+         // Tilldela felaktig etikett 
+          button.innerText = colorLabels[randomLabelIndex]; 
+        }
+      }
     }
+
+    // -------------------------------------Hanterar knappklick-------------------------
+     // Funktionen kollar om det är rätt knapp, startar timern vid första rätta klick.
+     // Räkare för rätt antal klick och statar nästa runda el avslutar spelat.
+    function handleButtonClick(event) {
+      // Klickad knapp
+      // event = lyssnar på onecklic. 
+      // event.target = html element för knapparna som pekar på den specifika knappen.
+      // clickedButton = backgroundColor och innerText hämtas.
+      var clickedButton = event.target; 
+
+      // Färgen på knappen som klickades på.
+      var backgroundColor = clickedButton.style.backgroundColor;
+
+      // Texten på knappen som klickades på.
+      var buttonText = clickedButton.innerText; 
+//--------------------------------------------------------------------------------------
+//Använder färgen för att hitta rätt index i colorKeys
+
+// Index för knappens färg
+      var correctIndex = colorKeys.indexOf(backgroundColor); 
+      // Text baserat på färg
+      var correctText = colorLabels[correctIndex]; 
+//--------------------------------------------------------------------------------------
+
+//  Kontrollera om rätt knapp klickats. 
+      if (buttonText === correctText) { 
+
+//--------------------------------------------------------------------------------------
+// Startar timern vid första rätta klicket samt sätter timern som aktiv
+        if (!timerRunning) {
+          startTime = Date.now(); 
+          timerRunning = true; 
+        }
+//--------------------------------------------------------------------------------------------
+        correctClicks++; 
+
+        
+     // Om spelaren når x antal klicks (numberOfSeries är knuten till setting.html) korrekta klick = Beräknar hur lång tid spelet tog, 
+     // begär initialer, sparar resultatet och skickar användaren till index.html  
+      
+     
+     if (correctClicks === numberOfSeries) { 
+
+          //logga numberOfSeries
+          console.log(numberOfSeries);
+
+          // Beräkna tid i sekunder
+          var elapsedTime = Math.floor((Date.now() - startTime) / 1000); 
+
+       // Begär initialer   
+          var initials = prompt("Game completed in " + elapsedTime + " seconds! Enter your initials:"); 
+
+
+
+      // Spara resultat
+          saveScore(initials, elapsedTime); 
+          
+          // Loggar saveScore 
+          console.log("Save  Completed: ",saveScore);
+
+   // Skicka användaren till index-sidanm (scoreboard) efter avslutad runda.
+          window.location.href = "index.html"; 
+        } else {
+
+      // Blanda knappar för nästa runda
+          changeButtonColorsAndNames(); 
+        }
+      } else {
+        // Logga felaktigt klick
+        console.log("Incorrect button clicked."); 
+      }
+    }
+
+
+    // Spara resultat i localStorage
+    // Tar emot spelarens initialer och tid.
+    function saveScore(initials, time) {
+
+      //Hämtar tidigare resultat från webläsarens localStorage.
+     var scoreboard = localStorage.getItem("scoreboard"); 
+      if (!scoreboard) {
+// Skapa ny array om ingen finns
+        scoreboard = []; 
+      } else {
+        // Omvandla JSON till array
+       // JSON = "[{"initials" "ABC", "time":30]"
+       // Array =[{initials: "ABC", time:30}]
+        scoreboard = JSON.parse(scoreboard); 
+      }
+      console.log(JSON.scoreboard);
+console.log(scoreboard);
+      // Lägg till de nya resultatet som ett eliment i slutet av arrayen
+      scoreboard.push({ initials: initials, time: time }); 
+
+      // Spara tillbaka i localStorage som JSON-sträng (textsträng)
+      // JSON.stringify = konventerar tillbaka till en JSON stäng eftersom localStorage 
+      // kan endast lagra textsträngar.
+      localStorage.setItem("scoreboard", JSON.stringify(scoreboard)); 
+    }
+
+    // Kopplar klickhändelser till knapparna
+    document.getElementById('button1').onclick = handleButtonClick;
+    document.getElementById('button2').onclick = handleButtonClick;
+    document.getElementById('button3').onclick = handleButtonClick;
+
+    // Initiera spelet genom att blanda knappar
+    changeButtonColorsAndNames();
   </script>
 </body>
 </html>
