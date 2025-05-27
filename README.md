@@ -53,6 +53,10 @@ I changed the IF stament (the IF statmen that handel the correct clicks) that th
 setting.html
 saved the value from Numbers Of Series to localStorage. 
 
+2025-05-26/27.
+Trying to solv the problem with the unique box. I have changed the program but still got the same rsault.
+By using the array usedCombinations (includes the combination of color and label), I thougt the problem was solved. But not!! I have no more ideas how to solv this.  
+
 
 # Project Summary
 

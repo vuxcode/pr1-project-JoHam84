@@ -85,6 +85,8 @@
    // Status för om timern är aktiv
     var timerRunning = false; 
 
+  
+
 // Hämtar "Number of series" från localStorage.
 // Finns inget färde i series blir värdet default 10.
 // parseInt omvandlar värdet från en sträng till heltal. localstorage lagrar värdet som en stäng.
@@ -92,7 +94,7 @@ var numberOfSeries = parseInt(localStorage.getItem("series")) || 10;
 
 
 
-
+//-------------------------------------------------------------------------------------------------------------------
     // Funktion för att tilldela korrekt färg och text till en unik knapp
     // och tilldela felaktiga kombinationer till övriga knappar.
     function changeButtonColorsAndNames() {
@@ -116,12 +118,22 @@ var numberOfSeries = parseInt(localStorage.getItem("series")) || 10;
       // Sparar korrekt etikett från slumpande indexet.
       var correctLabel = colorLabels[correctIndex];
 
+ // Variabler som håller reda på använda färg-etikett-kombinationer
+ // Lägg till den korrekta kombinationen
+  var usedCombinations = [`${correctColor}-${correctLabel}`]; 
+
+        // Variabler som håller reda på vilka färger och etiketter som ska användas
+      //var  usedColor = [correctColor];
+      //var  usedLabels = [correctLabel];
+      //console.log(usedColor);
 
       // En slumpmässig knapp får den rätta färgen. 
       // 0 för första knappen (button 1)
       // 1 för andra knappen  (button 2)
       // 2 för tredje knappen ( button 3)
       var correctButtonIndex = Math.floor(Math.random() * buttons.length);
+
+      
 
       // Loopa igenom vaje knapp för att tilldela rätt färg och text
      // i = 0 -> button = button 1
@@ -142,36 +154,39 @@ var numberOfSeries = parseInt(localStorage.getItem("series")) || 10;
           button.innerText = correctLabel;
         } else {
 
-// Kontroll av uträkningen. Det verkar dock som att jag ser steget före efter att jag har klickat. Kolla upp detta!
-/*console.log("Runda: " + (i + 1) + ":" );
-      console.log(" Slumpat index: " + correctIndex);
-      console.log(" Vald färg: " + correctColor);
-      console.log(" vald etikett " + correctLabel);
-*/
-          // Tilldela slumpmässiga felkombinationer till övriga knappar
-          // Slumpindex för färg från colorIndex
-          var randomColorIndex = Math.floor(Math.random() * colorKeys.length); 
 
-          // Slumpindex för text från colorLabels
-          var randomLabelIndex = Math.floor(Math.random() * colorLabels.length); 
+          // Skapar variabler för färg, etikett och kombinationshantering
+          var randomColorIndex;
+          var randomLabelIndex;
+          var randomCombination;
+          
+          do {
+            // Slumpar en färg och etikett
+             randomColorIndex = Math.floor(Math.random() * colorKeys.length);
+            randomLabelIndex = Math.floor(Math.random() * colorLabels.length);
 
-          // Felaktiga knappar får slumade färger och etiketter. While-loopen säkerställer att de
-          //inte matchar den korrekta kombinationen.
+          // Färgen och etiketten kombineras som en sträng
+          // colorKeys[randomColorIndex] = hämtar färgen = blue
+          //colorLabels[randomLabelIndex] = hämtar etiketten = Blue Button
+          randomCombination = `${colorKeys[randomColorIndex]}-${colorLabels[randomLabelIndex]}`;
 
-          // Fungerar ej. Ny lösning: Kontrollera både färd och text samtidigt?
+          // Kontrollerar om den kombinationen är unik.
+        // colorKeys = [red, green, blue];
+        // colorLabels = [Red Button, Green Button, Blue Button];
+          // usedCombinatoion = [red-Red Button, green-Green Button]; = lista med tidigare kombinationer
+          // includes(randomCombination) kontrollerar att kombon finns i listan.
+          } while (usedCombinations.includes(randomCombination));
 
-          while (randomColorIndex === correctIndex && randomLabelIndex === correctIndex) {
-            // Ny slumpmässig färg-index
-            randomColorIndex = Math.floor(Math.random() * colorKeys.length); 
-            // Ny slumpmässig etikett-index
-            randomLabelIndex = Math.floor(Math.random() * colorLabels.length); 
-          }
 
-          // Tilldela felaktig färg
-          button.style.backgroundColor = colorKeys[randomColorIndex]; 
+          // Läggert till färgen i listan över använda färger
+          usedCombinations.push(randomCombination);
 
-         // Tilldela felaktig etikett 
-          button.innerText = colorLabels[randomLabelIndex]; 
+           
+          
+         // Tilldela knappen den unika kombinationen
+         button.style.backgroundColor = colorKeys[randomColorIndex];
+         button.innerText = colorLabels[randomLabelIndex]; 
+
         }
       }
     }

@@ -14,10 +14,10 @@ Trying to fix a slider and a save button in the settings page.
 2025-05-08. Worker for 0.5 huors. Total time 12.5h of 30h
 Move the slider to the center of the screen.
 
-2025-08-08 No time i registrated
+2025-05-08 No time i registrated
 Removing the the test with the reault box after 10 clicks. I thought it messed whit the program, but I was wrong.
 
-2025-08-14/15. Worked for 6 hours. Total time 18.5 h of 30.
+2025-05-14/15. Worked for 6 hours. Total time 18.5 h of 30.
 I had to change a lot of the code in the game.html. Now it's more simple for me to understand and make changeses in the program. 
 The changes: 
 * Changed the function for looping the buttons. Removed the DO function.
@@ -26,11 +26,16 @@ The changes:
 *Added the timer and a counter. When the user has finished the game, the player can enter ther initials. The initials and the total time will be aved in a scoreboard
 in index.html page. 
 
-2025-08-15 (After school) Worked for 4 houres. Total time 22.5 h of 30 h.
+2025-05-15 (After school) Worked for 4 houres. Total time 22.5 h of 30 h.
 Creater a function in setting.html for updating lto localstorage and slider.
 
-2025-08-21. Worked for 4 houres. Total time 26.5h of 30h
+2025-05-21. Worked for 4 houres. Total time 26.5h of 30h
 Fixing so that correctClicks = Number of Series from the setting.html page.
+
+2025-05-26/27. Worked for 3 houres. Total time 29,5h of 30h
+Trying to solv the problem with the unique box. Afert some change I still get multiple boxes when I play the game. I have added an new array "usedCombination". More in readme.
+
+
 
 For example: 
 
