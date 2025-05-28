@@ -60,6 +60,9 @@ By using the array usedCombinations (includes the combination of color and label
 2025-05-28.
 Created at function in setting.html thah clear the scoreboard in index.html. I also added a new butten 'Clear Scoreboard' int eht setting.html page.
 
+2025-05-28
+Updating user guid
+
 # Project Summary
 
 This projekt has been enyoyable, yet challenging experience and has demanded a significant amount of time and effort. 
@@ -71,4 +74,15 @@ Overall, this project has inspired me to dive deeper into programming and contin
 
 # User Guide
 
-> Write a clear user guide for how someone should use your program.
+> How to play the Color Sprint - Matching Mania.
+
+The game: The game is about clicking on the correct box that has the correct label, for example a green box with the label green button. The idea is that there should only be one box that has the correct color and label, but unfortunately I haven't gotten that function right. When the first button is clicked, a timer starts, the player's time is reported later after the series is over, then the player enters their initials and these, together with the time, are saved in the scoreboard.
+
+Settings: 
+During the settings, there are a few settings that the user can make. After changing the settings, the user must save (press the save button).
+Number of Boxes - adjusts the number of boxes (function not active)
+Number of Colors - Add/remove the number of colors (function not active)
+Number of series - number of series during a game round. This function works.
+Dark Theme (Function not active)
+Clear Scoreboard - Clears the scoreboard on the index page. 
+Click Test - A check for the player that their mouse is working properly.

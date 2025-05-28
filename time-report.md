@@ -35,8 +35,10 @@ Fixing so that correctClicks = Number of Series from the setting.html page.
 2025-05-26/27. Worked for 3 houres. Total time 29,5h of 30h
 Trying to solv the problem with the unique box. Afert some change I still get multiple boxes when I play the game. I have added an new array "usedCombination". More in readme.
 
-2025-05-28. Worked for 2 houres. Total time 31.5h of 30h.
+2025-05-28. Worked for 2 houres. Total time 31.5h.
 Created a function that cleared the scoreboard in index.html.
+
+2025-05-28. Worked for 0,1 houres. Total time 31,6. 
 
 
 For example: 
