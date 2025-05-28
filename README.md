@@ -57,10 +57,17 @@ saved the value from Numbers Of Series to localStorage.
 Trying to solv the problem with the unique box. I have changed the program but still got the same rsault.
 By using the array usedCombinations (includes the combination of color and label), I thougt the problem was solved. But not!! I have no more ideas how to solv this.  
 
+2025-05-28.
+Created at function in setting.html thah clear the scoreboard in index.html. I also added a new butten 'Clear Scoreboard' int eht setting.html page.
 
 # Project Summary
 
-> Before the final submission date you should include a "PROJECT SUMMARY" in this section here. 
+This projekt has been enyoyable, yet challenging experience and has demanded a significant amount of time and effort. 
+The time I have reported is not entirely accurate, as I workde on  small segments during lunch breakes at work and in the eavenings after my children went to bed. You can easily add an 5-7 houers to my reported time.
+
+In addition to the functionalities and code examples demonstrated by Colin during our lessons, I have discovered other examples and techniques that could be useful to know. For instance, I explored ways to send data using JSON and localStorage, which I found particularly intriguing and practical.
+
+Overall, this project has inspired me to dive deeper into programming and continue exploring its many possibilities.
 
 # User Guide
 

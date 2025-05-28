@@ -114,6 +114,9 @@
     <!-- Dark Theme-knapp -->
     <button class="button dark-theme-button" onclick="toggleDarkTheme()">Dark Theme</button>
 
+    <!-- Clear Scoreboard-knapp -->
+<button class="button dark-theme-button" onclick="clearScoreboard()">Clear Scoreboard</button>
+
     <!-- Save-knapp -->
     <button class="button save-button" onclick="saveSettings()">Save Settings</button>
 
@@ -144,6 +147,20 @@
   // Bekräftelsemeddelande vid save.
       alert('Your new setting is now saved!');
     }
+
+// Funktion för att rensa historiken på scoreboard
+function clearScoreboard() {
+  // Tar bort 'scoreboard' från localStorage
+  // All sparad data relaterad till scoreboard försvinner.
+  localStorage.removeItem('scoreboard');
+
+  // Bekräftelsemeddelande att att scoreboard har rensats
+  alert("Scoreboard cleared!");
+
+  // Uppdaterar sidan för att säkerställa att inställningen ska gälla.
+  location.reload();
+
+}
 
     // Funktion för att testa musen
     function clickTest() {
